@@ -1,10 +1,17 @@
 :root {
-  --green: #3aa13f;
+  --green: #4E9845;
+  --light-green: #EDF5EC;
+  --main: #333333;
+  color: var(--main);
+
   .green-color {
     color: var(--green);
   }
   .green-bg-color {
     background-color: var(--green);
+  }
+  .light-green-bg-color {
+    background-color: var(--light-green);
   }
 }
 

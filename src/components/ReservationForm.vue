@@ -1,25 +1,27 @@
 <template>
-  <div class="reservation-form d-flex flex-column justify-center align-center">
-    <div class="top d-flex flex-2 align-center justify-around">
-      <div class="left">
-        <div class="price montserrat-font font-size-medium font-bold">{{ price }} zł</div>
-        <div class="rating d-flex">
-          <div :key="index"
-               :class="{ 'green-color': rating > value || value - 0.5 === rating }"
-               v-for="(value, index) in 5">
-            <span :class="[ getIcon(value), 'mdi' ]"></span>
+  <div class="reservation-form d-flex justify-center">
+    <div class="form-container d-flex flex-column">
+      <div class="top d-flex flex-2 justify-space-between">
+        <div class="left">
+          <div class="price font-size-medium font-bold">{{ price }} zł</div>
+          <div class="rating d-flex">
+            <div :key="index"
+                 :class="{ 'green-color': rating > value || value - 0.5 === rating }"
+                 v-for="(value, index) in 5">
+              <span :class="[ `mdi-star${getIconName(value)}`, 'mdi' ]"></span>
+            </div>
+            <span class="rating-counter font-bold font-size-small">{{ ratingCounter }}</span>
           </div>
-          <span class="rating-counter font-bold font-size-small">{{ ratingCounter }}</span>
+        </div>
+        <div class="right">
+          <button class="btn submit-btn">
+            reserve
+          </button>
         </div>
       </div>
-      <div class="right">
-        <button class="submit-btn green-bg-color">
-          reserve
-        </button>
+      <div class="bottom flex-1">
+        <DateRange/>
       </div>
-    </div>
-    <div class="bottom flex-1">
-
     </div>
   </div>
 </template>
@@ -27,9 +29,11 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { DateRangeInterface } from '@/interfaces/date-range.interface';
+import DateRange from '@/components/DateRange.vue';
 
 @Component({
   components: {
+    DateRange,
   },
 })
 export default class ReservationForm extends Vue {
@@ -47,10 +51,10 @@ export default class ReservationForm extends Vue {
 
   private dateRange: Partial<DateRangeInterface> = {};
 
-  getIcon(value: number): string {
-    if (this.rating > value) return 'mdi-star';
-    if (value - 0.5 === this.rating) return 'mdi-star-half-full';
-    return 'mdi-star-outline';
+  getIconName(value: number): string {
+    if (this.rating > value) return '';
+    if (value - 0.5 === this.rating) return '-half-full';
+    return '-outline';
   }
 }
 </script>
@@ -58,40 +62,19 @@ export default class ReservationForm extends Vue {
 <style lang="scss">
  .reservation-form {
     --box-shadow-color: #dfdede;
-    --price-color: #333333;
 
-    width: 50vw;
+    width: 30vw;
     height: 20vh;
+
     padding: 3vh 0;
     border: 2px solid #fff;
     border-radius: 20px;
     box-shadow: 1px 1px 20px 2px var(--box-shadow-color);
-    .top {
-      width: 100%;
-      .left {
-        .price {
-          color: var(--price-color);
-        }
-        .rating {
-          color: #999999;
-          .rating-counter {
-            margin: 2px 0 0 4px;
-          }
-        }
-      }
-      .right {
-        .submit-btn {
-          text-transform: capitalize;
-          border: 2px solid #fff;
-          border-radius: 100px;
-          font-size: 14px;
-          font-weight: 600;
-          padding: 10px 15px;
-          display: inline-block;
-          text-align: center;
-          color: #fff;
-        }
-      }
-    }
+   .form-container {
+     width: 90%;
+     .rating-counter {
+       margin: 2px 0 0 4px;
+     }
+   }
   }
 </style>

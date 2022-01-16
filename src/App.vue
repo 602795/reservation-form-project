@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="d-flex align-center justify-center">
+    <div class="d-flex align-center justify-center montserrat-font">
       <ReservationForm :price="reservation.price"
                        :rating="reservation.rating"
                        :rating-counter="reservation.ratingCounter"
@@ -56,7 +56,7 @@ export default class App extends Vue {
   }
 
   get reservation(): ReservationInterface {
-    return this.reservationData[1];
+    return this.randomReservationData;
   }
 }
 </script>
@@ -69,7 +69,6 @@ export default class App extends Vue {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
     margin-top: 60px;
   }
 </style>
