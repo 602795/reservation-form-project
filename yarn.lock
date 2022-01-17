@@ -2012,17 +2012,20 @@
   "resolved" "https://registry.npm.taobao.org/cyclist/download/cyclist-1.0.1.tgz"
   "version" "1.0.1"
 
+"d@^1.0.1", "d@1":
+  "integrity" "sha512-m62ShEObQ39CfralilEQRjH6oAMtNCV1xJyEx5LpRYUVN+EviphDgUc/F3hnYbADmkiNs67Y+3ylmlG7Lnu+FA=="
+  "resolved" "https://registry.npmjs.org/d/-/d-1.0.1.tgz"
+  "version" "1.0.1"
+  dependencies:
+    "es5-ext" "^0.10.50"
+    "type" "^1.0.1"
+
 "dashdash@^1.12.0":
   "integrity" "sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA="
   "resolved" "https://registry.nlark.com/dashdash/download/dashdash-1.14.1.tgz"
   "version" "1.14.1"
   dependencies:
     "assert-plus" "^1.0.0"
-
-"dayjs@^1.5.24":
-  "integrity" "sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig=="
-  "resolved" "https://registry.npmjs.org/dayjs/-/dayjs-1.10.7.tgz"
-  "version" "1.10.7"
 
 "de-indent@^1.0.2":
   "version" "1.0.2"
@@ -2468,6 +2471,32 @@
     "is-date-object" "^1.0.1"
     "is-symbol" "^1.0.2"
 
+"es5-ext@^0.10.35", "es5-ext@^0.10.50":
+  "integrity" "sha512-Xs2Stw6NiNHWypzRTY1MtaG/uJlwCk8kH81920ma8mvN8Xq1gsfhZvpkImLQArw8AHnv8MT2I45J3c0R8slE+Q=="
+  "resolved" "https://registry.npmjs.org/es5-ext/-/es5-ext-0.10.53.tgz"
+  "version" "0.10.53"
+  dependencies:
+    "es6-iterator" "~2.0.3"
+    "es6-symbol" "~3.1.3"
+    "next-tick" "~1.0.0"
+
+"es6-iterator@~2.0.3":
+  "integrity" "sha1-p96IkUGgWpSwhUQDstCg+/qY87c="
+  "resolved" "https://registry.npmjs.org/es6-iterator/-/es6-iterator-2.0.3.tgz"
+  "version" "2.0.3"
+  dependencies:
+    "d" "1"
+    "es5-ext" "^0.10.35"
+    "es6-symbol" "^3.1.1"
+
+"es6-symbol@^3.1.0", "es6-symbol@^3.1.1", "es6-symbol@~3.1.3":
+  "integrity" "sha512-NJ6Yn3FuDinBaBRWl/q5X/s4koRHBrgKAu+yGI6JCBeiu3qrcbJhwT2GeR/EXVfylRk8dpQVJoLEFhK+Mu31NA=="
+  "resolved" "https://registry.npmjs.org/es6-symbol/-/es6-symbol-3.1.3.tgz"
+  "version" "3.1.3"
+  dependencies:
+    "d" "^1.0.1"
+    "ext" "^1.1.2"
+
 "escalade@^3.1.1":
   "integrity" "sha1-2M/ccACWXFoBdLSoLqpcBVJ0LkA="
   "resolved" "https://registry.npm.taobao.org/escalade/download/escalade-3.1.1.tgz?cache=0&sync_timestamp=1602567306925&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fescalade%2Fdownload%2Fescalade-3.1.1.tgz"
@@ -2643,6 +2672,13 @@
     "type-is" "~1.6.18"
     "utils-merge" "1.0.1"
     "vary" "~1.1.2"
+
+"ext@^1.1.2":
+  "integrity" "sha512-sdBImtzkq2HpkdRLtlLWDa6w4DX22ijZLKx8BMPUuKe1c5lbN6xwQDQCxSfxBQnHZ13ls/FH0MQZx/q/gr6FQg=="
+  "resolved" "https://registry.npmjs.org/ext/-/ext-1.6.0.tgz"
+  "version" "1.6.0"
+  dependencies:
+    "type" "^2.5.0"
 
 "extend-shallow@^2.0.1":
   "integrity" "sha1-Ua99YUrZqfYQ6huvu5idaxxWiQ8="
@@ -4542,6 +4578,18 @@
   dependencies:
     "minimist" "^1.2.5"
 
+"moment-range@^4.0.2":
+  "integrity" "sha512-n8sceWwSTjmz++nFHzeNEUsYtDqjgXgcOBzsHi+BoXQU2FW+eU92LUaK8gqOiSu5PG57Q9sYj1Fz4LRDj4FtKA=="
+  "resolved" "https://registry.npmjs.org/moment-range/-/moment-range-4.0.2.tgz"
+  "version" "4.0.2"
+  dependencies:
+    "es6-symbol" "^3.1.0"
+
+"moment@^2.29.1", "moment@>= 2":
+  "integrity" "sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ=="
+  "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
+  "version" "2.29.1"
+
 "move-concurrently@^1.0.1":
   "integrity" "sha1-viwAX9oy4LKa8fBdfEszIUxwH5I="
   "resolved" "https://registry.nlark.com/move-concurrently/download/move-concurrently-1.0.1.tgz"
@@ -4622,6 +4670,11 @@
   "integrity" "sha1-tKr7k+OustgXTKU88WOrfXMIMF8="
   "resolved" "https://registry.nlark.com/neo-async/download/neo-async-2.6.2.tgz"
   "version" "2.6.2"
+
+"next-tick@~1.0.0":
+  "integrity" "sha1-yobR/ogoFpsBICCOPchCS524NCw="
+  "resolved" "https://registry.npmjs.org/next-tick/-/next-tick-1.0.0.tgz"
+  "version" "1.0.0"
 
 "nice-try@^1.0.4":
   "integrity" "sha1-ozeKdpbOfSI+iPybdkvX7xCJ42Y="
@@ -7028,6 +7081,16 @@
     "media-typer" "0.3.0"
     "mime-types" "~2.1.24"
 
+"type@^1.0.1":
+  "integrity" "sha512-+5nt5AAniqsCnu2cEQQdpzCAh33kVx8n0VoFidKpB1dVVLAN/F+bgVOqOJqOnEnrhp222clB5p3vUlD+1QAnfg=="
+  "resolved" "https://registry.npmjs.org/type/-/type-1.2.0.tgz"
+  "version" "1.2.0"
+
+"type@^2.5.0":
+  "integrity" "sha512-180WMDQaIMm3+7hGXWf12GtdniDEy7nYcyFMKJn/eZz/6tSLXrUN9V0wKSbMjej0I1WHWbpREDEKHtqPQa9NNw=="
+  "resolved" "https://registry.npmjs.org/type/-/type-2.5.0.tgz"
+  "version" "2.5.0"
+
 "typedarray@^0.0.6":
   "integrity" "sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c="
   "resolved" "https://registry.npm.taobao.org/typedarray/download/typedarray-0.0.6.tgz"
@@ -7259,13 +7322,6 @@
 
 "vue-class-component@*", "vue-class-component@^7.2.3":
   "version" "7.2.6"
-
-"vue-dayjs@^1.0.2":
-  "integrity" "sha512-rYvbpjZ6ZZ2MyQPpyltQmPBqd4+2RRfcFZb5/Fa6VsmBCmeSXTl6RHrHSOY72y5NJOrrxTpBg6VnP556gNSU7w=="
-  "resolved" "https://registry.npmjs.org/vue-dayjs/-/vue-dayjs-1.0.2.tgz"
-  "version" "1.0.2"
-  dependencies:
-    "dayjs" "^1.5.24"
 
 "vue-hot-reload-api@^2.3.0":
   "integrity" "sha1-UylVzB6yCKPZkLOp+acFdGV+CPI="

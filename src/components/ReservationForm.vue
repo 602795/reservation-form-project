@@ -1,5 +1,5 @@
 <template>
-  <div class="reservation-form d-flex justify-center">
+  <div class="reservation-form form d-flex justify-center">
     <div class="form-container d-flex flex-column">
       <div class="top d-flex flex-2 justify-space-between">
         <div class="left">
@@ -61,15 +61,8 @@ export default class ReservationForm extends Vue {
 
 <style lang="scss">
  .reservation-form {
-    --box-shadow-color: #dfdede;
-
     width: 30vw;
-    height: 20vh;
-
-    padding: 3vh 0;
-    border: 2px solid #fff;
-    border-radius: 20px;
-    box-shadow: 1px 1px 20px 2px var(--box-shadow-color);
+    height: var(--reservation-form-height);
    .form-container {
      width: 90%;
      .rating-counter {

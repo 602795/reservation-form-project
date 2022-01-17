@@ -1,22 +1,27 @@
 <template>
   <div class="date-range-component d-flex flex-column justify-center">
     <div class="content d-flex justify-around align-center">
-      <label class="label">Date From</label>
-      <span class="mdi mdi-arrow-right"></span>
-      <label class="label">Date To</label>
+      <label @click="showCalendar = !showCalendar"
+             class="label">Date From</label>
+      <span class="mdi mdi-arrow-right right-arrow-icon"></span>
+      <label @click="showCalendar = !showCalendar"
+             class="label">Date To</label>
+      <Calendar v-show="showCalendar"/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import Calendar from '@/components/Calendar.vue';
 
 @Component({
   components: {
+    Calendar,
   },
 })
 export default class DateRange extends Vue {
-
+  private showCalendar: boolean = false;
 }
 </script>
 
@@ -24,8 +29,8 @@ export default class DateRange extends Vue {
   .date-range-component {
     border: 1px solid var(--green);
     border-radius: 100px;
-    height: 48px;
-    .mdi-arrow-right {
+    height: var(--chips-height);
+    .right-arrow-icon {
       font-size: 20px;
       margin-top: 6px;
     }
@@ -42,6 +47,11 @@ export default class DateRange extends Vue {
         background-color: var(--light-green);
         border-radius: 100px;
       }
+    }
+    .calendar {
+      position: absolute;
+      top: 35vh;
+      left: 36vw;
     }
   }
 </style>

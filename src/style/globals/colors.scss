@@ -1,8 +1,11 @@
 :root {
   --green: #4E9845;
   --light-green: #EDF5EC;
-  --main: #333333;
-  color: var(--main);
+  --main-color: #333333;
+  --box-shadow-color: #dfdede;
+  --week-day-color: #999999;
+
+  color: var(--main-color);
 
   .green-color {
     color: var(--green);
