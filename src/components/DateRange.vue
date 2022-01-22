@@ -22,18 +22,12 @@
           mdi-close
         </v-icon>
       </label>
-      <Calendar :unavailable-dates="unavailableDates"
-                :date-range="dateRange"
-                :has-error="hasError"
-                :type="type"
-                @date-range-change="v => $emit('update:date-range', v)"
-                v-show="showCalendar"/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator';
 import Calendar from '@/components/Calendar/Calendar.vue';
 import { DateRangeInterface } from '@/interfaces/date-range.interface';
 
@@ -49,11 +43,15 @@ export default class DateRange extends Vue {
   @Prop({ type: Boolean, default: false })
   readonly hasError!: boolean;
 
+  @Prop({ type: Boolean, default: false })
+  readonly showCalendar!: boolean;
+
   @Prop()
   readonly dateRange!: DateRangeInterface;
 
-  private showCalendar: boolean = false;
-  private type: 'start' | 'end' | '' = '';
+  @Prop()
+  readonly type!: 'start' | 'end' | '';
+
 
   get start(): string {
     return this.dateRange.start.length ? this.dateRange.start : 'Date from';
@@ -69,15 +67,15 @@ export default class DateRange extends Vue {
 
   onLabelClick(type: 'start' | 'end') {
     if (this.type === type || this.type === '') {
-      this.showCalendar = !this.showCalendar;
+      this.$emit('update:show-calendar', !this.showCalendar);
     }
-    this.type = type;
+    this.$emit('update:type', type);
   }
 
   @Watch('showCalendar')
   onCalendarClose() {
     if (!this.showCalendar) {
-      this.type = '';
+      this.$emit('update:type', this.type);
     }
   }
 }
@@ -109,11 +107,6 @@ export default class DateRange extends Vue {
         background-color: var(--v-light-green-base);
         border-radius: 100px;
       }
-    }
-    .calendar {
-      position: absolute;
-      top: 30%;
-      left: 30%;
     }
   }
 </style>

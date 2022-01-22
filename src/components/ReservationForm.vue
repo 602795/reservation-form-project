@@ -24,11 +24,20 @@
       <div class="bottom flex-1">
         <DateRange :unavailable-dates="unavailableDates"
                    :has-error="hasError"
-                   :date-range.sync="dateRange"/>
+                   :type.sync="type"
+                   :show-calendar.sync="showCalendar"
+                   :date-range="dateRange"/>
         <div class="notice-container">
           <span v-show="hasError" class="error-notice font-size-small">
             The start date must be before the end date
           </span>
+        </div>
+        <div class="calendar-container d-flex justify-center">
+          <Calendar :unavailable-dates="unavailableDates"
+                    :date-range.sync="dateRange"
+                    :has-error="hasError"
+                    :type="type"
+                    v-show="showCalendar"/>
         </div>
       </div>
     </div>
@@ -39,10 +48,12 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { DateRangeInterface } from '@/interfaces/date-range.interface';
 import DateRange from '@/components/DateRange.vue';
+import Calendar from '@/components/Calendar/Calendar.vue';
 
 @Component({
   components: {
     DateRange,
+    Calendar,
   },
 })
 export default class ReservationForm extends Vue {
@@ -57,6 +68,10 @@ export default class ReservationForm extends Vue {
 
   @Prop()
   readonly unavailableDates!: string[];
+
+  private type: 'start' | 'end' | '' = '';
+
+  private showCalendar: boolean = false;
 
   private dateRange: DateRangeInterface = {
     start: '',
@@ -86,7 +101,7 @@ export default class ReservationForm extends Vue {
     width: 40vw;
     min-width: 348px;
     height: var(--reservation-form-height);
-    min-height: 160px;
+    min-height: 180px;
    &.error {
      border-color: var(--v-error-base);
    }
@@ -100,22 +115,26 @@ export default class ReservationForm extends Vue {
          margin: 2px 0 0 4px;
        }
      }
-   }
-   .btn {
-     &.disabled, &.error {
-       cursor: not-allowed;
+     .btn {
+       &.disabled, &.error {
+         cursor: not-allowed;
+       }
+       &.disabled {
+         opacity: .2;
+       }
+       &.error {
+         background-color: var(--v-error-base);
+       }
      }
-     &.disabled {
-       opacity: .2;
+     .notice-container {
+       padding-top: 4px;
+       height: 10px;
+       .error-notice {
+         color: var(--v-error-base);
+       }
      }
-     &.error {
-       background-color: var(--v-error-base);
-     }
-   }
-   .notice-container {
-     height: 10px;
-     .error-notice {
-       color: var(--v-error-base);
+     .calendar-container {
+       height: 10px;
      }
    }
   }

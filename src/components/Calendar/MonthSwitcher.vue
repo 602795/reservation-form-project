@@ -12,10 +12,9 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({
-  components: {
-  },
+  components: {},
 })
-export default class DateSwitcher extends Vue {
+export default class MonthSwitcher extends Vue {
   @Prop()
   readonly month!: string;
 
@@ -29,6 +28,8 @@ export default class DateSwitcher extends Vue {
     border: 1px solid #D8D8D8;
     border-radius: 100px;
     height: var(--chips-height);
+    min-height: var(--chips-height);
+
     .content {
       line-height: 20px;
     }

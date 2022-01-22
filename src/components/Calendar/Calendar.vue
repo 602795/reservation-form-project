@@ -1,29 +1,31 @@
 <template>
   <div class="calendar form d-flex justify-center">
-    <div class="calendar-container d-flex flex-column">
-      <DateSwitcher :month="month"
-                    :year="year"
-                    @next-month="changeMonth('next')"
-                    @prev-month="changeMonth('prev')"/>
-      <div class="monthly-calendar-container flex-column">
-        <Weekdays/>
-        <v-container>
-          <v-row :key="`${r}-week`"
-                 v-for="r in week"
-                 class="row">
-            <v-col :key="`${label}-day`"
-                   :class="{ disabled, today, selected, between, first, last, 'font-size-small': true }"
-                   @click="selectDay(day)"
-                   v-for="{ day, label, selected, disabled, today, between, first, last } in getDaysPerWeek(r)">
-              {{ label }}
-              <span :class="{ selected, today }"
-                    v-show="!!selected || !!today"
-                    class="circle">
+    <div class="calendar-plus-switcher d-flex flex-column">
+      <MonthSwitcher :month="month"
+                     :year="year"
+                     @next-month="changeMonth('next')"
+                     @prev-month="changeMonth('prev')"/>
+      <div class="d-flex justify-center">
+        <div class="monthly-calendar-container flex-column">
+          <Weekdays/>
+          <v-container>
+            <v-row :key="`${week}-week`"
+                   v-for="week in weeks">
+              <v-col :key="`${label}-day`"
+                     :class="{ disabled, today, selected, between, first, last }"
+                     @click="selectDay(day)"
+                     v-for="{ day, label, selected, disabled, today, between, first, last } in getDaysPerWeek(week)"
+                     class="font-size-small">
                 {{ label }}
-              </span>
-            </v-col>
-          </v-row>
-        </v-container>
+                <span :class="{ selected, today }"
+                      v-show="!!selected || !!today"
+                      class="circle">
+                  {{ label }}
+                </span>
+              </v-col>
+            </v-row>
+          </v-container>
+        </div>
       </div>
     </div>
   </div>
@@ -31,14 +33,15 @@
 
 <script lang="ts">
 import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
-import DateSwitcher from '@/components/Calendar/DateSwitcher.vue';
+import MonthSwitcher from '@/components/Calendar/MonthSwitcher.vue';
 import { Moment } from 'moment';
 import Weekdays from '@/components/Calendar/Weekdays.vue';
 import { DateRangeInterface } from '@/interfaces/date-range.interface';
+import { DateInterface } from '@/interfaces/date.interface';
 
 @Component({
   components: {
-    DateSwitcher,
+    MonthSwitcher,
     Weekdays,
   },
 })
@@ -79,7 +82,7 @@ export default class Calendar extends Vue {
     return this.baseMoment.format('YYYY');
   }
 
-  get week(): number {
+  get weeks(): number {
     // weeks per month
     return Math.ceil(this.end.diff(this.start, 'd') / 7);
   }
@@ -102,7 +105,7 @@ export default class Calendar extends Vue {
       : this.baseMoment.subtract(1, 'month').clone();
   }
 
-  getDaysPerWeek(week: number) {
+  getDaysPerWeek(week: number): DateInterface[] {
     const thatWeek = this.start.clone().add(week - 1, 'weeks');
 
     const range = this.$moment.range(
@@ -110,21 +113,21 @@ export default class Calendar extends Vue {
       thatWeek.clone().endOf('week'),
     );
 
-    const days = [ ...range.by('day') ];
+    const days = [...range.by('day')];
 
-    return days.map((day: Moment, i: number) => ({
+    return days.map((day: Moment) => ({
       day,
       label: day.format('D'),
       today: day.isSame(this.$moment(), 'day'),
       disabled: this.dayUnavailable(day) || this.dayOutOfRange(day),
       selected: this.daySelected(day),
-      first: this.rangeSelected && this.startAsMoment.isSame(day),
-      last: this.rangeSelected && this.endAsMoment.isSame(day),
+      first: !this.hasError && this.rangeSelected && this.startAsMoment.isSame(day),
+      last: !this.hasError && this.rangeSelected && this.endAsMoment.isSame(day),
       between: this.dayInRange(day),
     }));
   }
 
-  @Emit('date-range-change')
+  @Emit('update:date-range')
   selectDay(day: Moment): DateRangeInterface {
     if (this.type === 'start') {
       return {
@@ -161,18 +164,16 @@ export default class Calendar extends Vue {
 
 <style lang="scss">
   .calendar {
-    width: 300px;
+    overflow-y: scroll;
+    background-color: white;
+    width: 90%;
     height: 380px;
 
-    .calendar-container {
+    .calendar-plus-switcher {
       width: 90%;
+      min-width: 250px;
       padding: 0 15px;
-
-      .month-switcher {
-        border: 1px solid #D8D8D8;
-        border-radius: 100px;
-        height: var(--chips-height);
-      }
+      overflow-y: scroll;
 
       .container {
         margin: 0;
@@ -181,12 +182,13 @@ export default class Calendar extends Vue {
       }
 
       .row {
-        margin-top: 8px;
-        margin-bottom: 8px;
+        margin-top: 4px;
+        margin-bottom: 0;
       }
 
       .col,
       .circle {
+        max-width: 34px;
         width: 34px;
         height: 34px;
         display: flex;
