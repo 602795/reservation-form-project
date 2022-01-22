@@ -27,7 +27,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import MonthSwitcher from '@/components/ReservationForm/Calendar/MonthSwitcher.vue';
 import { Moment } from 'moment';
 import Weekdays from '@/components/ReservationForm/Calendar/Weekdays.vue';
-import { DateRangeInterface } from '@/interfaces/date-range.interface';
+import { DateRangeInterface } from '~/interfaces/date-range.interface';
 import MonthlyCalendar from '@/components/ReservationForm/Calendar/Monthly.vue';
 
 @Component({

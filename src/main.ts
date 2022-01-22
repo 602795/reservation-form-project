@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
-import vuetify from '@/plugins/vuetify';
-import vueMoment from '@/plugins/vue-moment';
+import vuetify from '~/plugins/vuetify';
+import vueMoment from '~/plugins/vue-moment';
 import { extendMoment } from 'moment-range';
 import Moment from 'moment';
 

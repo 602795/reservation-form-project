@@ -16,11 +16,15 @@
     "baseUrl": ".",
     "types": [
       "webpack-env",
-      "vuetify"
+      "vuetify",
+      "jest"
     ],
     "paths": {
-      "@/*": [
+      "~/*": [
         "src/*"
+      ],
+      "@test/*": [
+        "tests/unit/__internals__/*"
       ]
     },
     "lib": [

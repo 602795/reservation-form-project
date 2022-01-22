@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import { DateRangeInterface } from '@/interfaces/date-range.interface';
+import { DateRangeInterface } from '~/interfaces/date-range.interface';
 
 @Component({
   components: {},

@@ -21,8 +21,8 @@
 <script lang="ts">
 import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 import { Moment } from 'moment';
-import { DateRangeInterface } from '@/interfaces/date-range.interface';
-import { DateInterface } from '@/interfaces/date.interface';
+import { DateRangeInterface } from '~/interfaces/date-range.interface';
+import { DateInterface } from '~/interfaces/date.interface';
 
 @Component({
   components: {},

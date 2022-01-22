@@ -12,7 +12,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import ReservationForm from '@/components/ReservationForm/ReservationForm.vue';
-import { ReservationInterface } from '@/interfaces/reservation.interface';
+import { ReservationInterface } from '~/interfaces/reservation.interface';
 import reservationDataMock from './mocks/reservation-data.json';
 
 @Component({

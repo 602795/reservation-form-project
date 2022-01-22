@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { DateRangeInterface } from '@/interfaces/date-range.interface';
+import { DateRangeInterface } from '~/interfaces/date-range.interface';
 import DateRangePicker from '@/components/ReservationForm/DateRangePicker.vue';
 import Calendar from '@/components/ReservationForm/Calendar/Calendar.vue';
 import ReservationInfo from '@/components/ReservationForm/ReservationInfo.vue';
