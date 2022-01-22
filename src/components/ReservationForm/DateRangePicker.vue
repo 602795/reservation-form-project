@@ -1,7 +1,7 @@
 <template>
   <div class="date-range-component d-flex flex-column justify-center">
     <div class="content d-flex justify-around align-center">
-      <label :class="{ 'selected': type === 'start' }"
+      <label :class="{ 'selected': type === 'start' && showCalendar }"
              @click.stop.prevent="onLabelClick('start')"
              class="label">
         {{ start }}
@@ -12,7 +12,7 @@
         </v-icon>
       </label>
       <span class="mdi mdi-arrow-right right-arrow-icon"></span>
-      <label :class="{ 'selected': type === 'end' }"
+      <label :class="{ 'selected': type === 'end' && showCalendar }"
              @click.stop.prevent="onLabelClick('end')"
              class="label">
         {{ end }}
@@ -27,31 +27,21 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator';
-import Calendar from '@/components/Calendar/Calendar.vue';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { DateRangeInterface } from '@/interfaces/date-range.interface';
 
 @Component({
-  components: {
-    Calendar,
-  },
+  components: {},
 })
-export default class DateRange extends Vue {
+export default class DateRangePicker extends Vue {
   @Prop()
-  readonly unavailableDates!: string[];
-
-  @Prop({ type: Boolean, default: false })
-  readonly hasError!: boolean;
+  readonly type!: 'start' | 'end' | '';
 
   @Prop({ type: Boolean, default: false })
   readonly showCalendar!: boolean;
 
   @Prop()
   readonly dateRange!: DateRangeInterface;
-
-  @Prop()
-  readonly type!: 'start' | 'end' | '';
-
 
   get start(): string {
     return this.dateRange.start.length ? this.dateRange.start : 'Date from';
@@ -61,19 +51,23 @@ export default class DateRange extends Vue {
     return this.dateRange.end.length ? this.dateRange.end : 'Date to';
   }
 
-  clear(type: 'start' | 'end') {
+  clear(type: 'start' | 'end'): void {
     this.dateRange[type] = '';
   }
 
-  onLabelClick(type: 'start' | 'end') {
-    if (this.type === type || this.type === '') {
-      this.$emit('update:show-calendar', !this.showCalendar);
+  onLabelClick(type: 'start' | 'end'): void {
+    // while changing the type, when the calendar is open, don't close it
+    if (this.type !== type && this.showCalendar) {
+      this.$emit('update:type', type);
+      return;
     }
+
+    this.$emit('update:show-calendar', !this.showCalendar);
     this.$emit('update:type', type);
   }
 
   @Watch('showCalendar')
-  onCalendarClose() {
+  onCalendarClose(): void {
     if (!this.showCalendar) {
       this.$emit('update:type', this.type);
     }
@@ -83,13 +77,16 @@ export default class DateRange extends Vue {
 
 <style lang="scss">
   .date-range-component {
+    cursor: pointer;
     border: 1px solid var(--v-main-green-base);
     border-radius: 100px;
     height: var(--chips-height);
+
     .right-arrow-icon {
       font-size: 20px;
       margin-top: 6px;
     }
+
     .label {
       display: flex;
       align-items: center;
@@ -98,10 +95,11 @@ export default class DateRange extends Vue {
       height: 35px;
       font-weight: 600;
       font-size: 14px;
-      cursor: pointer;
+
       .v-icon {
         margin-left: 4px;
       }
+
       &.selected {
         color: var(--v-main-green-base);
         background-color: var(--v-light-green-base);

@@ -12,8 +12,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
-  components: {
-  },
+  components: {},
 })
 export default class Weekdays extends Vue {
 	get weekDays(): string[] {

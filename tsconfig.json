@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "downlevelIteration": true,
+    "resolveJsonModule": true,
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",

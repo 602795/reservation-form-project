@@ -11,8 +11,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import ReservationForm from '@/components/ReservationForm.vue';
+import ReservationForm from '@/components/ReservationForm/ReservationForm.vue';
 import { ReservationInterface } from '@/interfaces/reservation.interface';
+import reservationDataMock from './mocks/reservation-data.json';
 
 @Component({
   components: {
@@ -20,43 +21,10 @@ import { ReservationInterface } from '@/interfaces/reservation.interface';
   },
 })
 export default class App extends Vue {
-  private reservationData: ReservationInterface[] = [
-    {
-      name: 'Amalfi Luxury Hotel',
-      price: 1000,
-      rating: 5,
-      ratingCounter: 100,
-      unavailableDates: ['20.01.2022'],
-    },
-    {
-      name: 'Dea Guest House',
-      price: 298,
-      rating: 3.5,
-      ratingCounter: 123,
-      unavailableDates: ['06.01.2022', '07.01.2022', '20.01.2022'],
-    },
-    {
-      name: 'Amalfi B&B',
-      price: 200,
-      rating: 3,
-      ratingCounter: 20,
-      unavailableDates: ['20.02.2022', '21.02.2022', '20.01.2022'],
-    },
-    {
-      name: 'Luxury Hotel',
-      price: 550,
-      rating: 4.5,
-      ratingCounter: 50,
-      unavailableDates: ['20.01.2022'],
-    },
-  ];
-
-  get randomReservationData(): ReservationInterface {
-    return this.reservationData[Math.floor(Math.random() * this.reservationData.length)];
-  }
+  private reservationData: ReservationInterface[] = reservationDataMock;
 
   get reservation(): ReservationInterface {
-    return this.randomReservationData;
+    return this.reservationData[Math.floor(Math.random() * this.reservationData.length)];
   }
 }
 </script>
