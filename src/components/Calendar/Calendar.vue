@@ -12,9 +12,9 @@
                  v-for="r in week"
                  class="row">
             <v-col :key="`${label}-day`"
-                   :class="{ disabled, today, selected, 'font-size-small': true }"
+                   :class="{ disabled, today, selected, inRange, 'font-size-small': true }"
                    @click="selectDay(day)"
-                   v-for="{ day, label, selected, disabled, today } in getDaysPerWeek(r)">
+                   v-for="{ day, label, selected, disabled, today, inRange } in getDaysPerWeek(r)">
               {{ label }}
             </v-col>
           </v-row>
@@ -40,6 +40,9 @@ import { DateRangeInterface } from '@/interfaces/date-range.interface';
 export default class Calendar extends Vue {
   @Prop()
   readonly type!: 'start' | 'end';
+
+  @Prop({ type: Boolean, default: false })
+  readonly hasError!: boolean;
 
   @Prop()
   readonly dateRange!: DateRangeInterface;
@@ -76,6 +79,18 @@ export default class Calendar extends Vue {
     return Math.ceil(this.end.diff(this.start, 'd') / 7);
   }
 
+  get rangeSelected(): boolean {
+    return !!this.dateRange.start.length && !!this.dateRange.end.length;
+  }
+
+  get startAsMoment(): Moment {
+    return this.$moment(this.dateRange.start, 'DD-MM-YYYY');
+  }
+
+  get endAsMoment(): Moment {
+    return this.$moment(this.dateRange.end, 'DD-MM-YYYY');
+  }
+
   changeMonth(direction: 'next' | 'prev'): void {
     this.baseMoment = direction === 'next'
       ? this.baseMoment.add(1, 'month').clone()
@@ -98,10 +113,11 @@ export default class Calendar extends Vue {
       disabled: this.dayUnavailable(day) || this.dayOutOfRange(day),
       selected: this.daySelected(day),
       today: day.isSame(this.$moment(), 'day'),
+      inRange: this.dayInRange(day),
     }));
   }
 
-  @Emit('update:date-range')
+  @Emit('date-range-change')
   selectDay(day: Moment): DateRangeInterface {
     if (this.type === 'start') {
       return {
@@ -115,8 +131,14 @@ export default class Calendar extends Vue {
     };
   }
 
+  dayInRange(day: Moment): boolean {
+    if (!this.rangeSelected || this.daySelected(day) || this.hasError) return false;
+
+    return day.isBetween(this.startAsMoment, this.endAsMoment);
+  }
+
   daySelected(day: Moment): boolean {
-    return day.isSame(this.$moment(this.dateRange[this.type], 'DD-MM-YYYY'), 'day');
+    return day.isSame(this.startAsMoment, 'day') || day.isSame(this.endAsMoment, 'day');
   }
 
   dayOutOfRange(day: Moment): boolean {
@@ -151,7 +173,6 @@ export default class Calendar extends Vue {
         line-height: 16px;
         width: 34px;
         height: 34px;
-        margin-right: 2px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -168,6 +189,10 @@ export default class Calendar extends Vue {
           border: 2px solid var(--v-main-green-base);
           color: white;
           border-radius: 50%;
+        }
+        &.inRange {
+          background-color: var(--v-light-green-base);
+          color: var(--v-main-green-base);
         }
       }
       .row {

@@ -17,6 +17,7 @@ const vuetifyConfig = {
         'light-green': '#EDF5EC',
         'box-shadow': '#dfdede',
         'week-day-color': '#999999',
+        'error': '#8B1D1C',
       },
       dark: {
         //TODO
