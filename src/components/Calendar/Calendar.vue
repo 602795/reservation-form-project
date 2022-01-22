@@ -12,8 +12,9 @@
                  v-for="r in week"
                  class="row">
             <v-col :key="`${label}-day`"
-                   :class="{ disabled, today, 'font-size-small': true }"
-                   v-for="{ label, disabled, today } in getDaysPerWeek(r)">
+                   :class="{ disabled, today, selected, 'font-size-small': true }"
+                   @click="selectDay(day)"
+                   v-for="{ day, label, selected, disabled, today } in getDaysPerWeek(r)">
               {{ label }}
             </v-col>
           </v-row>
@@ -24,10 +25,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
 import DateSwitcher from '@/components/Calendar/DateSwitcher.vue';
 import { Moment } from 'moment';
 import Weekdays from '@/components/Calendar/Weekdays.vue';
+import { DateRangeInterface } from '@/interfaces/date-range.interface';
 
 @Component({
   components: {
@@ -36,6 +38,12 @@ import Weekdays from '@/components/Calendar/Weekdays.vue';
   },
 })
 export default class Calendar extends Vue {
+  @Prop()
+  readonly type!: 'start' | 'end';
+
+  @Prop()
+  readonly dateRange!: DateRangeInterface;
+
   @Prop()
   readonly unavailableDates!: string[];
 
@@ -85,17 +93,37 @@ export default class Calendar extends Vue {
     const days = [ ...range.by('day') ];
 
     return days.map((day: Moment, i: number) => ({
+      day,
       label: day.format('D'),
-      disabled: this.unavailable(day) || this.outOfMonthRange(day),
+      disabled: this.dayUnavailable(day) || this.dayOutOfRange(day),
+      selected: this.daySelected(day),
       today: day.isSame(this.$moment(), 'day'),
     }));
   }
 
-  outOfMonthRange(day: Moment): boolean {
+  @Emit('update:date-range')
+  selectDay(day: Moment): DateRangeInterface {
+    if (this.type === 'start') {
+      return {
+        start: day.format('DD-MM-YYYY'),
+        end: this.dateRange.end,
+      };
+    }
+    return {
+      start: this.dateRange.start,
+      end: day.format('DD-MM-YYYY'),
+    };
+  }
+
+  daySelected(day: Moment): boolean {
+    return day.isSame(this.$moment(this.dateRange[this.type], 'DD-MM-YYYY'), 'day');
+  }
+
+  dayOutOfRange(day: Moment): boolean {
     return !day.isSame(this.baseMoment, 'month');
   }
 
-  unavailable(day: Moment): boolean {
+  dayUnavailable(day: Moment): boolean {
     return this.unavailableDates.some((date) =>
       this.$moment(date, 'DD-MM-YYYY').isSame(this.$moment(day.format('DD-MM-YYYY'), 'DD-MM-YYYY')));
   }
@@ -117,6 +145,7 @@ export default class Calendar extends Vue {
       .container {
         margin: 0;
         padding: 2px;
+        cursor: pointer;
       }
       .col {
         line-height: 16px;
@@ -126,13 +155,18 @@ export default class Calendar extends Vue {
         display: flex;
         align-items: center;
         justify-content: center;
-
         &.disabled {
           opacity: .4;
         }
         &.today {
           color: var(--v-main-green-base);
           border: 2px solid var(--v-main-green-base);
+          border-radius: 50%;
+        }
+        &.selected {
+          background-color: var(--v-main-green-base);
+          border: 2px solid var(--v-main-green-base);
+          color: white;
           border-radius: 50%;
         }
       }

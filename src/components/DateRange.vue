@@ -1,12 +1,21 @@
 <template>
   <div class="date-range-component d-flex flex-column justify-center">
     <div class="content d-flex justify-around align-center">
-      <label @click="showCalendar = !showCalendar"
-             class="label">Date From</label>
+      <label :class="{ 'selected': type === 'start' }"
+             @click="onLabelClick('start')"
+             class="label">
+        {{ start }}
+      </label>
       <span class="mdi mdi-arrow-right right-arrow-icon"></span>
-      <label @click="showCalendar = !showCalendar"
-             class="label">Date To</label>
-      <Calendar :unavailable-dates="unavailableDates" v-show="showCalendar"/>
+      <label :class="{ 'selected': type === 'end' }"
+             @click="onLabelClick('end')"
+             class="label">
+        {{ end }}
+      </label>
+      <Calendar :unavailable-dates="unavailableDates"
+                :date-range.sync="dateRange"
+                :type="type"
+                v-show="showCalendar"/>
     </div>
   </div>
 </template>
@@ -14,6 +23,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import Calendar from '@/components/Calendar/Calendar.vue';
+import { DateRangeInterface } from '@/interfaces/date-range.interface';
 
 @Component({
   components: {
@@ -25,6 +35,26 @@ export default class DateRange extends Vue {
   readonly unavailableDates!: string[];
 
   private showCalendar: boolean = false;
+  private type: 'start' | 'end' | '' = '';
+  private dateRange: DateRangeInterface = {
+    start: '',
+    end: '',
+  };
+
+  get start(): string {
+    return this.dateRange.start.length ? this.dateRange.start : 'Date from';
+  }
+
+  get end(): string {
+    return this.dateRange.end.length ? this.dateRange.end : 'Date to';
+  }
+
+  onLabelClick(type: 'start' | 'end') {
+    if (this.type === type || this.type === '') {
+      this.showCalendar = !this.showCalendar;
+    }
+    this.type = type;
+  }
 }
 </script>
 
@@ -45,7 +75,7 @@ export default class DateRange extends Vue {
       height: 35px;
       font-weight: 600;
       font-size: 14px;
-      &:hover {
+      &.selected {
         color: var(--v-main-green-base);
         background-color: var(--v-light-green-base);
         border-radius: 100px;
