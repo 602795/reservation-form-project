@@ -25,6 +25,7 @@ import { DateRangeInterface } from '~/interfaces/date-range.interface';
 import { DateInterface } from '~/interfaces/date.interface';
 
 @Component({
+  name: 'MonthlyCalendar',
   components: {},
 })
 export default class MonthlyCalendar extends Vue {
