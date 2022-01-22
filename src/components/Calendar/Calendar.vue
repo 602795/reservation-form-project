@@ -12,10 +12,15 @@
                  v-for="r in week"
                  class="row">
             <v-col :key="`${label}-day`"
-                   :class="{ disabled, today, selected, inRange, 'font-size-small': true }"
+                   :class="{ disabled, today, selected, between, first, last, 'font-size-small': true }"
                    @click="selectDay(day)"
-                   v-for="{ day, label, selected, disabled, today, inRange } in getDaysPerWeek(r)">
+                   v-for="{ day, label, selected, disabled, today, between, first, last } in getDaysPerWeek(r)">
               {{ label }}
+              <span :class="{ selected, today }"
+                    v-show="!!selected || !!today"
+                    class="circle">
+                {{ label }}
+              </span>
             </v-col>
           </v-row>
         </v-container>
@@ -110,10 +115,12 @@ export default class Calendar extends Vue {
     return days.map((day: Moment, i: number) => ({
       day,
       label: day.format('D'),
+      today: day.isSame(this.$moment(), 'day'),
       disabled: this.dayUnavailable(day) || this.dayOutOfRange(day),
       selected: this.daySelected(day),
-      today: day.isSame(this.$moment(), 'day'),
-      inRange: this.dayInRange(day),
+      first: this.rangeSelected && this.startAsMoment.isSame(day),
+      last: this.rangeSelected && this.endAsMoment.isSame(day),
+      between: this.dayInRange(day),
     }));
   }
 
@@ -156,48 +163,78 @@ export default class Calendar extends Vue {
   .calendar {
     width: 300px;
     height: 380px;
+
     .calendar-container {
       width: 90%;
       padding: 0 15px;
+
       .month-switcher {
         border: 1px solid #D8D8D8;
         border-radius: 100px;
         height: var(--chips-height);
       }
+
       .container {
         margin: 0;
         padding: 2px;
         cursor: pointer;
       }
-      .col {
-        line-height: 16px;
+
+      .row {
+        margin-top: 8px;
+        margin-bottom: 8px;
+      }
+
+      .col,
+      .circle {
         width: 34px;
         height: 34px;
         display: flex;
         align-items: center;
         justify-content: center;
+        line-height: 16px;
+      }
+
+      .col {
+        .circle {
+          position: absolute;
+          border-radius: 50%;
+          border: 2px solid var(--v-main-green-base);
+
+          &.today {
+            color: var(--v-main-green-base);
+          }
+
+          &.selected {
+            background-color: var(--v-main-green-base);
+            color: white;
+          }
+        }
+
         &.disabled {
           opacity: .4;
         }
-        &.today {
-          color: var(--v-main-green-base);
-          border: 2px solid var(--v-main-green-base);
-          border-radius: 50%;
+
+        &.disabled.range {
+          color: var(--v-box-shadow-base);
         }
-        &.selected {
-          background-color: var(--v-main-green-base);
-          border: 2px solid var(--v-main-green-base);
-          color: white;
-          border-radius: 50%;
-        }
-        &.inRange {
+
+        &.between,
+        &.first,
+        &.last {
           background-color: var(--v-light-green-base);
           color: var(--v-main-green-base);
         }
-      }
-      .row {
-        margin-top: 8px;
-        margin-bottom: 8px;
+
+        &.first {
+          border-bottom-left-radius: 20px;
+          border-top-left-radius: 20px;
+        }
+
+        &.last {
+          border-bottom-right-radius: 20px;
+          border-top-right-radius: 20px;
+        }
       }
     }
   }

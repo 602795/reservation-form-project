@@ -27,7 +27,7 @@
                    :date-range.sync="dateRange"/>
         <div class="notice-container">
           <span v-show="hasError" class="error-notice font-size-small">
-            Data początku musi być przed datą końca
+            The start date must be before the end date
           </span>
         </div>
       </div>
