@@ -26,28 +26,28 @@ export default class App extends Vue {
       price: 1000,
       rating: 5,
       ratingCounter: 100,
-      unavailableDates: [],
+      unavailableDates: ['20.01.2022'],
     },
     {
       name: 'Dea Guest House',
       price: 298,
       rating: 3.5,
       ratingCounter: 123,
-      unavailableDates: ['06.01.2022, 07.01.2022'],
+      unavailableDates: ['06.01.2022', '07.01.2022', '20.01.2022'],
     },
     {
       name: 'Amalfi B&B',
       price: 200,
       rating: 3,
       ratingCounter: 20,
-      unavailableDates: ['20.02.2022, 21.02.2022'],
+      unavailableDates: ['20.02.2022', '21.02.2022', '20.01.2022'],
     },
     {
       name: 'Luxury Hotel',
       price: 550,
       rating: 4.5,
       ratingCounter: 50,
-      unavailableDates: [],
+      unavailableDates: ['20.01.2022'],
     },
   ];
 

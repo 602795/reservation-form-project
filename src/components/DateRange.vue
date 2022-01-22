@@ -6,14 +6,14 @@
       <span class="mdi mdi-arrow-right right-arrow-icon"></span>
       <label @click="showCalendar = !showCalendar"
              class="label">Date To</label>
-      <Calendar v-show="showCalendar"/>
+      <Calendar :unavailable-dates="unavailableDates" v-show="showCalendar"/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import Calendar from '@/components/Calendar.vue';
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import Calendar from '@/components/Calendar/Calendar.vue';
 
 @Component({
   components: {
@@ -21,6 +21,9 @@ import Calendar from '@/components/Calendar.vue';
   },
 })
 export default class DateRange extends Vue {
+  @Prop()
+  readonly unavailableDates!: string[];
+
   private showCalendar: boolean = false;
 }
 </script>
@@ -43,15 +46,15 @@ export default class DateRange extends Vue {
       font-weight: 600;
       font-size: 14px;
       &:hover {
-        color: var(--green);
-        background-color: var(--light-green);
+        color: var(--v-main-green-base);
+        background-color: var(--v-light-green-base);
         border-radius: 100px;
       }
     }
     .calendar {
       position: absolute;
-      top: 35vh;
-      left: 36vw;
+      top: 30%;
+      left: 30%;
     }
   }
 </style>

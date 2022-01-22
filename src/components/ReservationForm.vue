@@ -6,7 +6,7 @@
           <div class="price font-size-medium font-bold">{{ price }} zł</div>
           <div class="rating d-flex">
             <div :key="index"
-                 :class="{ 'green-color': rating > value || value - 0.5 === rating }"
+                 :class="{ 'main-green': rating > value || value - 0.5 === rating }"
                  v-for="(value, index) in 5">
               <span :class="[ `mdi-star${getIconName(value)}`, 'mdi' ]"></span>
             </div>
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="bottom flex-1">
-        <DateRange/>
+        <DateRange :unavailable-dates="unavailableDates"/>
       </div>
     </div>
   </div>
@@ -61,8 +61,10 @@ export default class ReservationForm extends Vue {
 
 <style lang="scss">
  .reservation-form {
-    width: 30vw;
+    width: 40vw;
+    min-width: 348px;
     height: var(--reservation-form-height);
+    min-height: 160px;
    .form-container {
      width: 90%;
      .rating-counter {
