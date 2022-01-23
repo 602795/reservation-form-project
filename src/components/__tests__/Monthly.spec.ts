@@ -1,13 +1,16 @@
 import { mount, Wrapper } from '@vue/test-utils';
 import { Vue } from 'vue/types/vue';
-import moment from 'Moment';
-import DateRangePicker from '@/components/ReservationForm/DateRangePicker.vue';
+import MonthlyCalendar from '@/components/ReservationForm/Calendar/MonthlyCalendar.vue';
+import { extendMoment } from 'moment-range';
+import Moment from 'moment';
 
-describe('DateRangePicker Component Test', () => {
+const moment = extendMoment(Moment as any);
+
+describe('Monthly Calendar Component Test', () => {
   let wrapper: Wrapper<Vue>;
 
   beforeEach(() => {
-    wrapper = mount(DateRangePicker, {
+    wrapper = mount(MonthlyCalendar, {
       propsData: {
         type: 'start',
         dateRange: {

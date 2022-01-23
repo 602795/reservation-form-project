@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DateRange Picker Component Test Pasuje do snapchota 1`] = `
+<div class="date-range-component d-flex flex-column justify-center">
+  <div class="content d-flex justify-around align-center"><label class="label">
+      Date from
+      <!---->
+    </label> <span class="mdi mdi-arrow-right right-arrow-icon"></span> <label class="label">
+      Date to
+      <!---->
+    </label></div>
+</div>
+`;

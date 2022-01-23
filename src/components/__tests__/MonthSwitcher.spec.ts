@@ -30,4 +30,8 @@ describe('Month Switcher Component Test', () => {
 
     expect(wrapper.emitted('prev-month')?.length).toBe(undefined);
   });
+
+  test('Pasuje do snapchota', async() => {
+    expect(wrapper.html()).toMatchSnapshot();
+  });
 });
