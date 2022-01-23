@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "downlevelIteration": true,
+    "resolveJsonModule": true,
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
@@ -13,7 +15,8 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env"
+      "webpack-env",
+      "vuetify"
     ],
     "paths": {
       "@/*": [

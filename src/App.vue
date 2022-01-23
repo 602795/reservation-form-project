@@ -1,29 +1,42 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <div class="d-flex align-center justify-center montserrat-font">
+      <ReservationForm :price="reservation.price"
+                       :rating="reservation.rating"
+                       :rating-counter="reservation.ratingCounter"
+                       :unavailable-dates="reservation.unavailableDates"/>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
+import ReservationForm from '@/components/ReservationForm/ReservationForm.vue';
+import { ReservationInterface } from '@/interfaces/reservation.interface';
+import reservationDataMock from './mocks/reservation-data.json';
 
 @Component({
   components: {
-    HelloWorld,
+    ReservationForm,
   },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  private reservationData: ReservationInterface[] = reservationDataMock;
+
+  get reservation(): ReservationInterface {
+    return this.reservationData[Math.floor(Math.random() * this.reservationData.length)];
+  }
+}
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  @import 'style/globals/main';
+
+  #app {
+    font-family: 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    margin-top: 60px;
+  }
 </style>

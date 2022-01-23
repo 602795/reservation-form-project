@@ -1,0 +1,15 @@
+.btn {
+  text-transform: capitalize;
+  border: 2px solid;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 15px;
+  display: inline-block;
+  text-align: center;
+}
+.submit-btn {
+  color: #fff;
+  background-color: var(--v-main-green-base);
+  border-color: #fff;
+}
