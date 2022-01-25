@@ -10,6 +10,7 @@
     "@mdi/font": "^6.5.95",
     "moment": "^2.29.1",
     "moment-range": "^4.0.2",
+    "sass": "^1.49.0",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^9.1.2",
@@ -18,7 +19,6 @@
   "devDependencies": {
     "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
     "typescript": "~4.1.5",
     "vue-cli-plugin-vuetify": "^2.4.3",
